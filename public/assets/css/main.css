@@ -1,0 +1,17 @@
+@import "landing.css";
+@import "nav.css";
+@import "cards.css";
+@import "signup.css";
+
+:root {
+    --font-title: 'Syne Mono', monospace;
+    --font-body: 'Comfortaa', sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+}
+
+h1, h2 {
+    font-family: var(--font-title);
+}

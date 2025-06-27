@@ -1,0 +1,11 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "lh8080"
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html:Z
+      - ./logs/apache:/var/log/apache2

@@ -8,27 +8,23 @@ require_once(LAYOUTS . '/header.php');
 
         <div class="row col-sm-10 col-md-8 col-lg-6 shadow p-3 bg-white rounded">
             <h2 class="text-center">Registrá una cuenta</h2>
-            <form class="row g-3">
+            <form id="form" class="row g-3 needs-validation">
                 <div class="col-12">
                     <label for="name" class="form-label">¿Cómo querés que te llamemos?</label>
-                    <input type="text" class="form-control is-invalid" id="name"
+                    <input type="text" class="form-control" id="name"
                            placeholder="Podés usar tu nombre o apodo"
                            required>
-                    <div class="invalid-feedback">
-                        Se ve bien!
-                    </div>
+                    <div class="" id="name_feedback"></div>
                 </div>
                 <div class="col-12">
                     <label for="username" class="form-label">Nombre de usuario</label>
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" class="form-control is-valid" id="username"
+                        <input type="text" class="form-control" id="username"
                                placeholder="Este será tu usuario para iniciar sesión"
-                               aria-describedby="usernameFeedback inputGroupPrepend"
+                               aria-describedby="username_feedback inputGroupPrepend"
                                required>
-                        <div class="valid-feedback" id="usernameFeedback">
-                            Se ve bien!
-                        </div>
+                        <div class="" id="username_feedback"></div>
                     </div>
                 </div>
                 <div class="col-12">
@@ -36,18 +32,21 @@ require_once(LAYOUTS . '/header.php');
                     <input type="email" class="form-control" id="email"
                            placeholder="Este es el contacto principal de tu cuenta"
                            required>
+                    <div class="" id="email_feedback"></div>
                 </div>
                 <div class="col-12">
                     <label for="password" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="password"
                            placeholder="Elegí una contraseña segura"
                            required>
+                    <div class="" id="password_feedback"></div>
                 </div>
                 <div class="col-12">
                     <label for="confirm_password" class="form-label">Volvé a ingresar tu contraseña</label>
                     <input type="password" class="form-control" id="confirm_password"
                            placeholder="Es para confirmar"
                            required>
+                    <div class="" id="confirm_password_feedback"></div>
                 </div>
                 <div class="col-12 mt-5 mb-3">
                     <button type="submit" class="btn btn-primary btn-lg w-100">¡Registrame!</button>
@@ -58,5 +57,5 @@ require_once(LAYOUTS . '/header.php');
         </div>
 
     </main>
-
+    <script type="module" src="<?php echo JS?>signup.js"></script>
 <?php require_once(LAYOUTS . '/footer.php'); ?>

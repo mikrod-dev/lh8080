@@ -1,25 +1,29 @@
-const MIN_INPUT_LENGTH = 3;
-const MIN_PASSWORD_LENGTH = 8;
+import GENERAL_CONFIG from "./general.js.php" ;
+import LANG_CONFIG from "./lang.js.php";
+
+const MIN_NAME_LENGTH = GENERAL_CONFIG['minNameLength'];
+const MIN_USERNAME_LENGTH = GENERAL_CONFIG['minUsernameLength'];
+const MIN_PASSWORD_LENGTH = GENERAL_CONFIG['minPasswordLength'];
 
 export function validateName(name, feedback) {
-    const isValid = name.value.trim().length >= MIN_INPUT_LENGTH;
+    const isValid = name.value.trim().length >= MIN_NAME_LENGTH;
     toggleValidationClass(name, isValid);
     toggleFeedbackClass(
         feedback,
         isValid,
-        '¡Se ve bien!',
-        `Los nombres distinguidos tienen mán de ${MIN_INPUT_LENGTH} caracteres`
+        LANG_CONFIG['valid_input'],
+        LANG_CONFIG['short_name']
     );
 }
 
 export function validateUsername(username, feedback) {
-    const isValid = username.value.trim().length >= MIN_INPUT_LENGTH;
+    const isValid = username.value.trim().length >= MIN_USERNAME_LENGTH;
     toggleValidationClass(username, isValid);
     toggleFeedbackClass(
         feedback,
         isValid,
-        '¡Se ve bien!',
-        `Usá más de ${MIN_INPUT_LENGTH} caracteres para que no te confundan con otros`
+        LANG_CONFIG['valid_input'],
+        LANG_CONFIG['short_username']
     );
 }
 
@@ -29,8 +33,8 @@ export function validateEmail(email, feedback) {
     toggleFeedbackClass(
         feedback,
         isValid,
-        '¡Se ve bien!',
-        'Poné un email válido, por favor'
+        LANG_CONFIG['valid_input'],
+        LANG_CONFIG['invalid_email']
     );
 }
 
@@ -40,20 +44,24 @@ export function validatePassword(password, feedback) {
     toggleFeedbackClass(
         feedback,
         isValid,
-        '¡Se ve bien!',
-        `¡Esa clave es muy corta! usá más de ${MIN_PASSWORD_LENGTH} caracteres`
+        LANG_CONFIG['valid_input'],
+        LANG_CONFIG['short_password']
     );
 }
 
 export function validateConfirmPassword(password, confirmPassword, confirmPasswordFeedback) {
-    const isValid = password.value === confirmPassword.value;
+    const isValidLength = confirmPassword.value.length >= MIN_PASSWORD_LENGTH;
+    const isValidValue = isValidLength && password.value === confirmPassword.value;
+    const isValid = isValidLength && isValidValue;
+
     toggleValidationClass(confirmPassword, isValid);
     toggleFeedbackClass(
         confirmPasswordFeedback,
         isValid,
-        '¡Se ve bien!',
-        'Que no se note cuál es la original... ¡hacelas iguales!'
+        LANG_CONFIG['valid_input'],
+        LANG_CONFIG['password_mismatch']
     );
+
 }
 
 export function validSubmit(form) {
@@ -70,7 +78,7 @@ export function validSubmit(form) {
 
 export function validateUsernameLogin(username, feedback) {
     if (isEmpty(username)) {
-        invalidInputLogin(username, feedback, '¡Psst! este campo es necesario');
+        invalidInputLogin(username, feedback, LANG_CONFIG['required_username']);
     } else {
         clearInvalidInputLogin(username, feedback);
     }
@@ -78,7 +86,7 @@ export function validateUsernameLogin(username, feedback) {
 
 export function validatePasswordLogin(password, feedback) {
     if (isEmpty(password)) {
-        invalidInputLogin(password, feedback, '¡Contraseña es clave!');
+        invalidInputLogin(password, feedback, LANG_CONFIG['required_password']);
     } else {
         clearInvalidInputLogin(password, feedback);
     }
@@ -110,5 +118,11 @@ function invalidInputLogin(input, feedback, message) {
 function clearInvalidInputLogin(input, feedback) {
     input.classList.remove('is-invalid');
     feedback.classList.remove('invalid-feedback');
+    feedback.innerHTML = '';
+}
+
+export function clearInput(input, feedback) {
+    input.classList.remove('is-valid', 'is-invalid');
+    feedback.classList.remove('valid-feedback', 'invalid-feedback');
     feedback.innerHTML = '';
 }

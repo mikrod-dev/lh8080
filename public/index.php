@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Inicio | lh:8080';
-require_once(__DIR__ . '/../config/php/config.php');
-require_once(LAYOUTS . '/header.php');
+require_once(__DIR__ . '/../config/php/paths.php');
+require_once(LAYOUTS . 'header.php');
 ?>
 
 <main class="container px-4 py-5 flex-grow-1">
@@ -31,6 +31,6 @@ require_once(LAYOUTS . '/header.php');
     </div>
 </main>
 
-<?php require_once(LAYOUTS . '/footer.php'); ?>
+<?php require_once(LAYOUTS . 'footer.php'); ?>
 
 

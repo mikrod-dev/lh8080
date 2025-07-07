@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Blog | lh:8080';
-require_once(__DIR__ . '/../config/php/config.php');
-require_once(LAYOUTS . '/header.php');
+require_once(__DIR__ . '/../config/php/paths.php');
+require_once(LAYOUTS . 'header.php');
 ?>
 
 <main class="container mt-5">
@@ -89,10 +89,10 @@ require_once(LAYOUTS . '/header.php');
         </section>
 
         <div class="col-12 col-lg-3 d-none d-lg-block">
-            <?php require_once(LAYOUTS . '/aside.php'); ?>
+            <?php require_once(LAYOUTS . 'aside.php'); ?>
         </div>
 
     </div>
 </main>
-<?php require_once(LAYOUTS . '/footer.php'); ?>
+<?php require_once(LAYOUTS . 'footer.php'); ?>
 

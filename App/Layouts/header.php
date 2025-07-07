@@ -1,6 +1,6 @@
 <?php
 $page_title = $page_title ?? 'Blog | lh:8080';
-require_once(__DIR__ . '/../../config/php/config.php');
+require_once(__DIR__ . '/../../config/php/paths.php');
 ?>
 <!DOCTYPE html>
 <html lang="es" class="h-100 m-0 p-0">
@@ -27,7 +27,7 @@ require_once(__DIR__ . '/../../config/php/config.php');
 
 <body class="container d-flex flex-column min-vh-100">
 <header>
-    <?php require_once(LAYOUTS . '/nav.php'); ?>
+    <?php require_once(LAYOUTS . 'nav.php'); ?>
 </header>
 
 <!--</body> este cierre está en footer.php-->

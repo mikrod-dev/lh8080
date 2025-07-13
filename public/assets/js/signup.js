@@ -4,8 +4,7 @@ import {
     validateEmail,
     validatePassword,
     validateConfirmPassword,
-    validSubmit,
-    clearInput
+    validSubmitSignup
 } from "./inputFormValidators.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -39,6 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     form.addEventListener("submit", (e) => {
-        if (!validSubmit(form)) e.preventDefault();
+        validateName(name, nameFeedback);
+        validateUsername(username, usernameFeedback);
+        validateEmail(email, emailFeedback);
+        validatePassword(password, passwordFeedback);
+        validateConfirmPassword(password, confirmPassword, confirmPasswordFeedback);
+
+        if (!validSubmitSignup(form)) e.preventDefault();
     });
 });

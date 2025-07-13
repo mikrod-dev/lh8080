@@ -32,6 +32,7 @@
                        href="/public/blog.php">
                         Blog
                     </a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
                        href="#"
@@ -65,10 +66,10 @@
                         <li><a class="dropdown-item" href="#">Physics</a></li>
                     </ul>
                 </li>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link"
-                       href="login.php">
+                       href="/public/index.php">
                         Iniciar sesión | Registrarse
                     </a>
                 </li>

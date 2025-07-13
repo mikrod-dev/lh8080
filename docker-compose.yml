@@ -8,4 +8,36 @@ services:
       - "8080:80"
     volumes:
       - .:/var/www/html:Z
-      - ./logs/apache:/var/log/apache2
+      - ./logs/apache:/var/log/apache2:Z
+      - ./public/uploads:/var/www/html/public/uploads:Z
+    depends_on:
+      - db
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+    networks:
+      - ${NETWORK}
+
+  db:
+    image: mysql:8.2
+    container_name: ${DB_CONTAINER_NAME}
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql:Z
+      - ./logs/mysql:/var/logs/mysql:Z
+      - ./sql:/docker-entrypoint-initdb.d:Z
+    networks:
+      - ${NETWORK}
+
+networks:
+  blog_network:
+    driver: bridge

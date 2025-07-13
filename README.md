@@ -102,7 +102,7 @@ El archivo [history.md](history.md) contiene los niveles superados y logros desb
 - [x] Navegación entre secciones
 - [x] Sistema de layouts reutilizables
 - [ ] Crear y editar publicaciones desde el panel admin
-- [ ] Autenticación (login/signup para admin)
+- [x] Autenticación (login/signup para admin)
 - [ ] Panel de usuario (admin) con subdominio
 - [ ] Base de datos para posts y usuarios
 - [ ] Routing personalizado con configuración de Apache y la clase Router

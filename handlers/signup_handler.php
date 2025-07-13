@@ -1,5 +1,9 @@
 <?php
 
+require_once(__DIR__ . '/../config/php/paths.php');
+require_once(CONTROLLERS . 'SignupController.php');
+require_once(SECURITY . 'SessionManager.php');
+
 use Controllers\SignupController;
 use Security\SessionManager;
 

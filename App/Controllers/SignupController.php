@@ -3,13 +3,19 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+require_once(__DIR__ . '/../../config/php/paths.php');
+require_once(CONFIG . 'locale.php');
+require_once(HELPERS . 'Lang.php');
+require_once(HELPERS . 'Sanitizer.php');
+require_once(HELPERS . 'Validator.php');
+require_once(MODELS . 'User.php');
+
 use Helpers\Sanitizer;
 use Helpers\Validator;
 use Helpers\Lang;
 use Models\User;
 
-require_once(CONFIG . 'locale.php');
-
+//solucionar el problema de tener que usar variables estáticas para los valores min
 final class SignupController
 {
     private static int $min_name_length;
@@ -86,8 +92,8 @@ final class SignupController
             'password' => $hashedPassword,
         ]);
 
-        if(!$userCreated){
-            error_log('Signup failed');//para testing
+        if(!$userCreated->save()){
+            error_log('Signup failed');
             return ['success' => false, 'errors' => ['general' => Lang::get('signup_failed')]];
         }
 

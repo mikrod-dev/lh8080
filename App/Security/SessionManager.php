@@ -6,14 +6,15 @@ final class SessionManager
 {
     public static function init(): void
     {
-        ini_set('session.use_only_cookies', 1); // Solo cookies
-        ini_set('session.use_strict_mode', 1); //
-        ini_set('session.cookie_httponly', 1); // Previene XSS
+        if (session_status() === PHP_SESSION_NONE){
+            ini_set('session.use_only_cookies', 1); // Solo cookies
+            ini_set('session.use_strict_mode', 1); //
+            ini_set('session.cookie_httponly', 1); // Previene XSS
 //        ini_set('session.cookie_secure', 1);// Sesiones solo funcionan con HTTPS activado
-        ini_set('session.cookie_samesite', 'Strict'); // Previene CSRF
+            ini_set('session.cookie_samesite', 'Strict'); // Previene CSRF
 
-
-        session_start();
+            session_start();
+        }
 
         self::regenerateId();
     }

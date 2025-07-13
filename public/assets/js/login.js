@@ -1,4 +1,4 @@
-import {validatePasswordLogin, validateUsernameLogin, validSubmit} from "./inputFormValidators.js";
+import {validatePasswordLogin, validateUsernameLogin, validSubmitLogin} from "./inputFormValidators.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("form");
@@ -7,10 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const usernameFeedback = document.getElementById("username_feedback");
     const passwordFeedback = document.getElementById("password_feedback");
 
-    username.addEventListener("input", () => validateUsernameLogin(username, usernameFeedback));
-    password.addEventListener("input", () => validatePasswordLogin(password, passwordFeedback));
+    username.addEventListener("blur", () => validateUsernameLogin(username, usernameFeedback));
+    password.addEventListener("blur", () => validatePasswordLogin(password, passwordFeedback));
 
     form.addEventListener("submit", (e) => {
-        if (!validSubmit(form)) e.preventDefault();
+        validateUsernameLogin(username, usernameFeedback);
+        validatePasswordLogin(password, passwordFeedback);
+
+        if (!validSubmitLogin(form)) e.preventDefault();
     });
 })

@@ -5,48 +5,60 @@ const MIN_NAME_LENGTH = GENERAL_CONFIG['minNameLength'];
 const MIN_USERNAME_LENGTH = GENERAL_CONFIG['minUsernameLength'];
 const MIN_PASSWORD_LENGTH = GENERAL_CONFIG['minPasswordLength'];
 
+
+function setValidationClass(input, isValid, showValid = true) {
+    input.classList.remove('is-valid', 'is-invalid');
+
+    if (!isValid) {
+        input.classList.add('is-invalid');
+    } else if (showValid) {
+        input.classList.add('is-valid');
+    }
+}
+
+function setFeedbackClass(feedback, isValid, validMessage, invalidMessage, showValid = true) {
+    feedback.classList.remove('valid-feedback', 'invalid-feedback');
+
+    if (!isValid) {
+        feedback.classList.add('invalid-feedback');
+    } else if (showValid) {
+        feedback.classList.add('valid-feedback');
+    }
+    feedback.innerHTML = isValid ? validMessage : invalidMessage;
+}
+
+
+function isEmpty(input) {
+    return input.value.trim().length === 0;
+}
+
+// Funciones signup
 export function validateName(name, feedback) {
     const isValid = name.value.trim().length >= MIN_NAME_LENGTH;
-    toggleValidationClass(name, isValid);
-    toggleFeedbackClass(
-        feedback,
-        isValid,
-        LANG_CONFIG['valid_input'],
-        LANG_CONFIG['short_name']
-    );
+
+    setValidationClass(name, isValid);
+    setFeedbackClass(feedback, isValid, LANG_CONFIG['valid_input'], LANG_CONFIG['short_name']);
 }
 
 export function validateUsername(username, feedback) {
     const isValid = username.value.trim().length >= MIN_USERNAME_LENGTH;
-    toggleValidationClass(username, isValid);
-    toggleFeedbackClass(
-        feedback,
-        isValid,
-        LANG_CONFIG['valid_input'],
-        LANG_CONFIG['short_username']
-    );
+
+    setValidationClass(username, isValid);
+    setFeedbackClass(feedback, isValid, LANG_CONFIG['valid_input'], LANG_CONFIG['short_username']);
 }
 
 export function validateEmail(email, feedback) {
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
-    toggleValidationClass(email, isValid);
-    toggleFeedbackClass(
-        feedback,
-        isValid,
-        LANG_CONFIG['valid_input'],
-        LANG_CONFIG['invalid_email']
-    );
+
+    setValidationClass(email, isValid);
+    setFeedbackClass(feedback, isValid, LANG_CONFIG['valid_input'], LANG_CONFIG['invalid_email']);
 }
 
 export function validatePassword(password, feedback) {
     const isValid = password.value.length >= MIN_PASSWORD_LENGTH;
-    toggleValidationClass(password, isValid);
-    toggleFeedbackClass(
-        feedback,
-        isValid,
-        LANG_CONFIG['valid_input'],
-        LANG_CONFIG['short_password']
-    );
+
+    setValidationClass(password, isValid);
+    setFeedbackClass(feedback, isValid, LANG_CONFIG['valid_input'], LANG_CONFIG['short_password']);
 }
 
 export function validateConfirmPassword(password, confirmPassword, confirmPasswordFeedback) {
@@ -54,17 +66,12 @@ export function validateConfirmPassword(password, confirmPassword, confirmPasswo
     const isValidValue = isValidLength && password.value === confirmPassword.value;
     const isValid = isValidLength && isValidValue;
 
-    toggleValidationClass(confirmPassword, isValid);
-    toggleFeedbackClass(
-        confirmPasswordFeedback,
-        isValid,
-        LANG_CONFIG['valid_input'],
-        LANG_CONFIG['password_mismatch']
-    );
+    setValidationClass(confirmPassword, isValid);
+    setFeedbackClass(confirmPasswordFeedback, isValid, LANG_CONFIG['valid_input'], LANG_CONFIG['password_mismatch']);
 
 }
 
-export function validSubmit(form) {
+export function validSubmitSignup(form) {
     const inputs = Array.from(form.querySelectorAll('input'));
 
     inputs.forEach(input => {
@@ -76,53 +83,35 @@ export function validSubmit(form) {
     return inputs.every(input => input.classList.contains('is-valid'));
 }
 
+// Funciones login
+
 export function validateUsernameLogin(username, feedback) {
-    if (isEmpty(username)) {
-        invalidInputLogin(username, feedback, LANG_CONFIG['required_username']);
-    } else {
-        clearInvalidInputLogin(username, feedback);
-    }
+    const isValid = !isEmpty(username);
+
+    setValidationClass(username, isValid, false);
+    setFeedbackClass(feedback, isValid, '', LANG_CONFIG['required_username'], false);
 }
 
 export function validatePasswordLogin(password, feedback) {
-    if (isEmpty(password)) {
-        invalidInputLogin(password, feedback, LANG_CONFIG['required_password']);
-    } else {
-        clearInvalidInputLogin(password, feedback);
+    const isValid = !isEmpty(password);
+
+    setValidationClass(password, isValid, false);
+    setFeedbackClass(feedback, isValid, '', LANG_CONFIG['required_password'], false);
+}
+
+export function validSubmitLogin(form) {
+    const username = form.querySelector('#username');
+    const password = form.querySelector('#password');
+    const isUsernameFilled = !isEmpty(username);
+    const isPasswordFilled = !isEmpty(password);
+
+    if (!isUsernameFilled) {
+        username.classList.add('is-invalid');
     }
-}
 
-function toggleValidationClass(input, isValid) {
-    input.classList.remove('is-valid', 'is-invalid');
-    input.classList.add(isValid ? 'is-valid' : 'is-invalid');
-}
+    if (!isPasswordFilled) {
+        password.classList.add('is-invalid');
+    }
 
-function toggleFeedbackClass(feedback, isValid, validMessage, invalidMessage) {
-    feedback.classList.remove('valid-feedback', 'invalid-feedback');
-    feedback.classList.add(isValid ? 'valid-feedback' : 'invalid-feedback');
-    feedback.innerHTML = isValid ? validMessage : invalidMessage;
-}
-
-function isEmpty(input) {
-    return input.value.trim() === '';
-}
-
-function invalidInputLogin(input, feedback, message) {
-    input.classList.remove('is-valid', 'is-invalid');
-    input.classList.add('is-invalid');
-    feedback.classList.remove('valid-feedback', 'invalid-feedback');
-    feedback.classList.add('invalid-feedback');
-    feedback.innerHTML = message;
-}
-
-function clearInvalidInputLogin(input, feedback) {
-    input.classList.remove('is-invalid');
-    feedback.classList.remove('invalid-feedback');
-    feedback.innerHTML = '';
-}
-
-export function clearInput(input, feedback) {
-    input.classList.remove('is-valid', 'is-invalid');
-    feedback.classList.remove('valid-feedback', 'invalid-feedback');
-    feedback.innerHTML = '';
+    return (isUsernameFilled && isPasswordFilled);
 }

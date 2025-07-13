@@ -1,6 +1,13 @@
+#.gitignore
+# Datos sensibles
 .env
+# Configuración local del IDE
 .idea
+# Archivos generados
 logs
+db_data
 *.log
 *.db
 *.sqlite
+*.dump
+sql/seed.sql

@@ -29,12 +29,13 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
                     <label for="username" class="form-label">Nombre de usuario</label>
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" class="form-control" id="username"
+                        <input type="text" id="username"
+                               class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : '' ?>"
                                name="username"
                                placeholder="Ingresá tu usuario"
-                               autocomplete="username""
-                        value="<?php echo Sanitizer::output($data['username'] ?? '') ?>"
-                        required>
+                               autocomplete="username"
+                               value="<?php echo Sanitizer::output($data['username'] ?? '') ?>"
+                               required>
                         <div class="invalid-feedback" id="username_feedback">
                             <?php echo $errors['username'] ?? '' ?>
                         </div>
@@ -42,7 +43,8 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
                 </div>
                 <div class="col-12">
                     <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password"
+                    <input type="password" id="password"
+                           class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : '' ?>"
                            name="password"
                            placeholder="Tu contraseña segura"
                            autocomplete="current-password"

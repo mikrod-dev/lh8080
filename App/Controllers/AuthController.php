@@ -3,13 +3,17 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+require_once(__DIR__ . '/../../config/php/paths.php');
+require_once(CONFIG . 'locale.php');
+require_once(HELPERS . 'Lang.php');
+require_once(HELPERS . 'Sanitizer.php');
+require_once(SECURITY . 'SessionManager.php');
+require_once(MODELS . 'User.php');
+
 use Models\User;
 use Security\SessionManager;
 use Helpers\Sanitizer;
 use Helpers\Lang;
-
-require_once(__DIR__ . '/../../config/php/paths.php');
-require_once(CONFIG . 'locale.php');
 
 final class AuthController
 {
@@ -32,17 +36,32 @@ final class AuthController
         }
 
         $user = User::findByUsername($username);
+        $loginFailed = Lang::get('login_failed');
+
         if (!$user) {
-            return ['success' => false, 'errors' => ['username' => Lang::get('username_not_found')]];
+            return [
+                'success' => false,
+                'errors' => [
+                    'username' => $loginFailed,
+                    'password' => $loginFailed
+                ]
+            ];
         }
 
         if (!password_verify($password, $user->getPasswordHash())) {
-            return ['success' => false, 'errors' => ['password' => Lang::get('login_failed')]];
+            return [
+                'success' => false,
+                'errors' => [
+                    'username' => $loginFailed,
+                    'password' => $loginFailed
+                ]
+            ];
         }
 
         SessionManager::init();
         $_SESSION['user_id'] = $user->getId();
         $_SESSION['username'] = $user->getUsername();
+        $user->setLastLogin();
 
         return ['success' => true];
     }

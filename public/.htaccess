@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# Redirigir a HTTPS en producción (Descomentar cuanoo haya SSL)
+# RewriteCond %{HTTPS} off
+# Rewritablerule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# URLs amigables para posts
+# No se aceptan ni directorios ni archivos en la URL
+# QSA: Query String Append
+# L: Last
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^post/([a-zA-Z0-9-]+)/?$ post.php?slug=$1 [L,QSA]
+
+# Redirigir admin sin barra final
+RewriteRule ^admin$ admin/ [R=301,L]

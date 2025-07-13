@@ -10,7 +10,7 @@ return [
     // Longitud mínima
     'short_username' => 'Usá más de :min caracteres para que no te confundan con otros',
     'short_name' => 'Los nombres distinguidos tienen más de :min caracteres',
-    'short_password' => '¡Esa clave es muy corta! usá más de :min caracteres',
+    'short_password' => 'Ingresá una clave con más de :min caracteres',
 
     // Confirmación
     'valid_input' => '¡Se ve bien!',
@@ -21,13 +21,13 @@ return [
     'invalid_email' => 'Poné un email válido, por favor',
     'invalid_username' => 'Ese nombre de usuario no está permitido',
     'invalid_password' => 'La clave debe contener al menos :min caracteres, una mayúscula, un número y un caracter especial',
-    'password_mismatch' => 'Que no se note cuál es la original... ¡hacelas iguales!',
+    'password_mismatch' => '¡Qué no se note cuál es la original! ¡hacelas iguales!',
 
     // Errores
     'generic_error' => 'Ocurrió un error inesperado. Intentalo de nuevo.',
-    'login_failed' => 'Usuario o contraseña incorrectos',
+    'login_failed' => 'Revisá los datos ingresados. ¡Intentá de nuevo!',
     'signup_failed' => 'Error al crear el usuario',
-    'username_taken' => 'Ya existe un usuario con ese nombre o email',
+    'username_taken' => 'Ya existe un usuario con ese nombre',
     'email_taken' => 'El correo electrónico ya está en registrado',
     'username_not_found' => 'El nombre de usuario no existe',
 ];

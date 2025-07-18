@@ -329,6 +329,21 @@ Este archivo sirve como bitácora de progreso y motivación personal 🧠💪
 └── docker-compose.yml
 ```
 
+## 🧪 Nivel 8: Dashboard
+**Objetivo**: Crear dashboards para admin y user\ 
+🏅 **Badges**: `🪪 Gestor de identidades`
+
+🔧 Tareas realizadas:
+- Crear interfaces distintas para cada tipo de usuario: admin, user y publi:
+  - 3 navs con distintos links
+  - 3 sidebars, 2 para los dashboards y uno para el de blog
+- Modularizar nav.php para poder separar uno por rol
+- Implementar funcionalidad dinámica a los sidebars que oculta el texto en pantallas chicas
+- Renombré la carpeta `Layouts/` por `Partials/`
+- Eliminar clases redundantes de Bootstrap
+ 
+📦 Resultado: Layout de Dashboards listos para agregar funcionalidad
+
 ***
 
 ### TO-DO: Refactor previo al router

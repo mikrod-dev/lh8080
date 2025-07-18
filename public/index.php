@@ -1,10 +1,14 @@
 <?php
 $page_title = 'Inicio | lh:8080';
 require_once(__DIR__ . '/../config/php/paths.php');
-require_once(LAYOUTS . 'header.php');
+require_once(PARTIALS . 'header.php');
 ?>
+<body class="container d-flex flex-column min-vh-100">
+<header>
+    <?php require_once(PARTIALS . 'nav.public.php'); ?>
+</header>
 
-<main class="container px-4 py-5 flex-grow-1">
+<main class="px-4 py-5 flex-grow-1">
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
         <div class="col-12 col-lg-6">
             <img src="/public/assets/images/hero-image.png"
@@ -30,7 +34,7 @@ require_once(LAYOUTS . 'header.php');
         </div>
     </div>
 </main>
-
-<?php require_once(LAYOUTS . 'footer.php'); ?>
+</body>
+<?php require_once(PARTIALS . 'footer.php'); ?>
 
 

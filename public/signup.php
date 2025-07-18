@@ -13,11 +13,15 @@ $page_title = 'Signup | lh:8080';
 $errors = $_SESSION['signup_errors'] ?? [];
 $data = $_SESSION['signup_data'] ?? [];
 
-require_once(LAYOUTS . 'header.php');
+require_once(PARTIALS . 'header.php');
 unset($_SESSION['signup_errors'], $_SESSION['signup_data']);
 ?>
+    <body class="container d-flex flex-column min-vh-100">
+<header>
+    <?php require_once(PARTIALS . 'nav.public.php'); ?>
+</header>
 
-    <main class="container d-flex justify-content-center align-items-center flex-grow-1 mt-5">
+    <main class="d-flex justify-content-center align-items-center flex-grow-1 mt-5">
 
         <div class="row col-sm-10 col-md-8 col-lg-6 shadow p-3 bg-white rounded">
             <h2 class="text-center">Registrá una cuenta</h2>
@@ -98,4 +102,5 @@ unset($_SESSION['signup_errors'], $_SESSION['signup_data']);
     </main>
 
     <script type="module" src="<?php echo JS ?>signup.js"></script>
-<?php require_once(LAYOUTS . 'footer.php'); ?>
+    </body>
+<?php require_once(PARTIALS . 'footer.php'); ?>

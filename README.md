@@ -1,6 +1,6 @@
 # 💡 Blog `lh:8080 | De localhost 🖥️ al mundo 🌍`
 
-![Progreso](https://img.shields.io/badge/Nivel-5%2F20-yellow?style=flat-square)
+![Progreso](https://img.shields.io/badge/Nivel-8%2F20-yellow?style=flat-square)
 ![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-orange?style=flat-square)
 ![Última actualización](https://img.shields.io/badge/Actualizado-junio%202025-informational?style=flat-square)
 ![PHP](https://img.shields.io/badge/PHP-8.2-blue?style=flat-square&logo=php)
@@ -88,13 +88,14 @@ El "juego" de armar este blog es como un RPG lleno de: misiones, buscar tutorial
 
 El archivo [history.md](history.md) contiene los niveles superados y logros desbloqueados
 
-## Niveles completados
+## Badges Adquiridos
 
 - 🛠️ Dockerize It!
 - 🔗 Modularizador
 - 🧾 Form Master
 - 📁 Arquitecto de carpetas
 - 🧠 Estratega de rutas
+- 🪪 Gestor de identidades
 
 ## 📌 Funcionalidades previstas
 
@@ -104,7 +105,7 @@ El archivo [history.md](history.md) contiene los niveles superados y logros desb
 - [ ] Crear y editar publicaciones desde el panel admin
 - [x] Autenticación (login/signup para admin)
 - [ ] Panel de usuario (admin) con subdominio
-- [ ] Base de datos para posts y usuarios
+- [x] Base de datos para posts y usuarios
 - [ ] Routing personalizado con configuración de Apache y la clase Router
 - [ ] Markdown + vista previa para posts
 - [ ] Buscador interno

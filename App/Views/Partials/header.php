@@ -1,7 +1,10 @@
 <?php
 $page_title = $page_title ?? 'Blog | lh:8080';
-require_once(__DIR__ . '/../../config/php/paths.php');
+require_once(__DIR__ . '/../../../config/php/paths.php');
+require_once(HELPERS . 'Sanitizer.php');
+use Helpers\Sanitizer;
 ?>
+
 <!DOCTYPE html>
 <html lang="es" class="h-100 m-0 p-0">
 <head>
@@ -25,12 +28,5 @@ require_once(__DIR__ . '/../../config/php/paths.php');
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo IMAGES ?>favicon_io/favicon-16x16.png">
     <link rel="manifest" href="<?php echo IMAGES ?>favicon_io/site.webmanifest">
 
-    <title><?php echo htmlspecialchars($page_title) ?></title>
+    <title><?php echo Sanitizer::output($page_title) ?></title>
 </head>
-
-<body class="container d-flex flex-column min-vh-100">
-<header>
-    <?php require_once(LAYOUTS . 'nav.php'); ?>
-</header>
-
-<!--</body> este cierre está en footer.php-->

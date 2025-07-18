@@ -1,10 +1,7 @@
 <?php
 ?>
 
-<!--<body> esta apertura está en header.php-->
-</body>
-
-<footer class="container text-center mt-5 py-4">
+<footer class="text-center mt-5 py-4">
     <div class="p-4">
         <section class="mb-4">
             <!-- Github -->

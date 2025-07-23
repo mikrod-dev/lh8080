@@ -3,6 +3,7 @@ require_once (__DIR__ . '/../../config/php/paths.php');
 require_once (HELPERS . 'Lang.php');
 require_once (SECURITY . 'SessionManager.php');
 
+//TODO:hacer este archivo una clase
 use Helpers\Lang;
 use Security\SessionManager;
 SessionManager::init();

@@ -46,7 +46,8 @@ require_once(__DIR__ . '/../../../config/php/paths.php');
                     </svg>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small shadow">
-                    <li><a class="dropdown-item" href="<?php echo DASHBOARD_USER ?>index.user.php">Mi panel</a></li>
+                    <li><a class="dropdown-item" href="<?php echo DASHBOARD_USER ?>index.view.php">Mi panel</a></li>
+                    <!-- TODO:completar logout-->
                     <li><a class="dropdown-item" href="<?php echo HANDLERS ?>">Salir</a></li>
                 </ul>
             </div>

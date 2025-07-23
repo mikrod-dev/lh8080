@@ -1,7 +1,8 @@
 <?php
 $page_title = $page_title ?? 'Blog | lh:8080';
 require_once(__DIR__ . '/../../../config/php/paths.php');
-require_once(HELPERS . 'Sanitizer.php');
+//require_once(HELPERS . 'Sanitizer.php');
+require_once(__DIR__ . '/../../../bootstrap/autoload.php');
 use Helpers\Sanitizer;
 ?>
 

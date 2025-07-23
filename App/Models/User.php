@@ -3,8 +3,8 @@
 namespace Models;
 
 require_once(__DIR__ . '/../../config/php/paths.php');
-require_once(CORE . 'Database.php');
-
+//require_once(CORE . 'Database.php');
+require_once(__DIR__ . '/../../bootstrap/autoload.php');
 use Core\Database;
 
 class User

@@ -2,8 +2,10 @@
 header('Content-Type: application/javascript');
 
 require_once(__DIR__ . '/../../../config/php/paths.php');
-require_once(CONFIG . 'locale.php');
-require_once (HELPERS . 'Lang.php');
+require_once(CONFIG . 'locale.php');//TODO:revisar este require
+//require_once (HELPERS . 'Lang.php');
+require_once (__DIR__ . '/../../../bootstrap/autoload.php');
+
 use Helpers\Lang;
 
 $message = require_once(CONFIG . 'general.php');
@@ -11,8 +13,8 @@ $message = require_once(CONFIG . 'general.php');
 $lang_config = [
     'required_username' => Lang::get('required_username'),
     'required_password' => Lang::get('required_password'),
-    'required_name' => Lang::get('required_name'),//usar?
-    'required_email' => Lang::get('required_email'),//usar?
+    'required_name' => Lang::get('required_name'),
+    'required_email' => Lang::get('required_email'),
     'required_confirm_password' => Lang::get('required_confirm_password'),
     'short_name' => Lang::get('short_name', ['min' => $message['min_name_length']]),
     'short_username' => Lang::get('short_username', ['min' => $message['min_username_length']]),

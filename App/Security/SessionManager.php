@@ -19,7 +19,6 @@ final class SessionManager
         self::regenerateId();
     }
 
-
     public static function regenerateId(): void
     {
         if(!isset($_SESSION['last_regeneration'])){
@@ -27,6 +26,12 @@ final class SessionManager
         }elseif(time() - $_SESSION['last_regeneration'] > 3600){
             session_regenerate_id(true);
         }
+    }
+
+    public static function destroy(): void
+    {
+        session_unset();
+        session_destroy();
     }
 
 }

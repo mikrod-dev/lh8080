@@ -1,8 +1,9 @@
 <?php
 $page_title = 'Login | lh:8080';
 require_once(__DIR__ . '/../config/php/paths.php');
-require_once(SECURITY . 'SessionManager.php');
-require_once(HELPERS . 'Sanitizer.php');
+//require_once(SECURITY . 'SessionManager.php');
+//require_once(HELPERS . 'Sanitizer.php');
+require_once(__DIR__ . '/../bootstrap/autoload.php');
 
 use Security\SessionManager;
 use Helpers\Sanitizer;

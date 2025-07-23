@@ -5,10 +5,11 @@ namespace Controllers;
 
 require_once(__DIR__ . '/../../config/php/paths.php');
 require_once(CONFIG . 'locale.php');
-require_once(HELPERS . 'Lang.php');
-require_once(HELPERS . 'Sanitizer.php');
-require_once(HELPERS . 'Validator.php');
-require_once(MODELS . 'User.php');
+//require_once(HELPERS . 'Lang.php');
+//require_once(HELPERS . 'Sanitizer.php');
+//require_once(HELPERS . 'Validator.php');
+//require_once(MODELS . 'User.php');
+require_once(__DIR__ . '/../../bootstrap/autoload.php');
 
 use Helpers\Sanitizer;
 use Helpers\Validator;

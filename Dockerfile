@@ -3,7 +3,7 @@ LABEL authors="mik"
 WORKDIR /var/www/html
 
 # Extensiones necesarias
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql
 
 # Habilitar mod_rewrite para URLs amigables y mod_headers para headers de seguridad
 RUN a2enmod rewrite && a2enmod headers

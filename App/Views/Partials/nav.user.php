@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../../../config/php/paths.php');
 
 <nav class="navbar navbar-expand-lg bg-transparent mt-3">
     <div class="container">
-        <a class="navbar-brand" href="/public/index.php">lh:8080</a>
+        <a class="navbar-brand" href="/">lh:8080</a>
         <button class="navbar-toggler btn-outline-light"
                 type="button"
                 data-bs-toggle="collapse"
@@ -26,9 +26,11 @@ require_once(__DIR__ . '/../../../config/php/paths.php');
             <?php require_once(PARTIALS . 'nav.php'); ?>
 
             <!--solo visible en pantallas chicas-->
-            <div class="btn-group d-lg-none mt-3" role="group" aria-label="login/signup buttons">
-                <a href="/public/login.php" class="btn btn-primary">Iniciar sesión</a>
-                <a href="/public/signup.php" class="btn btn-outline-secondary">Registrarse</a>
+            <div class="btn-group d-lg-none mt-3" role="group" aria-label="dashboard and logout buttons">
+                <a href="/dashboard" class="btn btn-outline-light">Mi panel</a>
+                <form action="/logout" method="post">
+                    <button type="submit" class="btn btn-danger">Salir</button>
+                </form>
             </div>
 
 
@@ -46,9 +48,12 @@ require_once(__DIR__ . '/../../../config/php/paths.php');
                     </svg>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small shadow">
-                    <li><a class="dropdown-item" href="<?php echo DASHBOARD_USER ?>index.view.php">Mi panel</a></li>
-                    <!-- TODO:completar logout-->
-                    <li><a class="dropdown-item" href="<?php echo HANDLERS ?>">Salir</a></li>
+                    <li><a class="dropdown-item" href="/dashboard">Mi panel</a></li>
+                    <li>
+                        <form action="/logout" method="post">
+                            <button type="submit" class="dropdown-item">Salir</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
 

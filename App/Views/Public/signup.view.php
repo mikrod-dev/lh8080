@@ -1,8 +1,6 @@
 <?php
-require_once(__DIR__ . '/../config/php/paths.php');
-//require_once(SECURITY . 'SessionManager.php');
-//require_once(HELPERS . 'Sanitizer.php');
-require_once(__DIR__ . '/../bootstrap/autoload.php');
+require_once(__DIR__ . '/../../../config/php/paths.php');
+require_once(__DIR__ . '/../../../bootstrap/autoload.php');
 
 use Security\SessionManager;
 use Helpers\Sanitizer;
@@ -11,11 +9,12 @@ SessionManager::init();
 
 
 $page_title = 'Signup | lh:8080';
-$errors = $_SESSION['signup_errors'] ?? [];
-$data = $_SESSION['signup_data'] ?? [];
+$errors = SessionManager::get('signup_errors') ?? [];
+$data = SessionManager::get('signup_data') ?? [];
 
+SessionManager::delete( 'signup_errors' );
+SessionManager::delete( 'signup_data' );
 require_once(PARTIALS . 'header.php');
-unset($_SESSION['signup_errors'], $_SESSION['signup_data']);
 ?>
     <body class="container d-flex flex-column min-vh-100">
 <header>
@@ -27,7 +26,7 @@ unset($_SESSION['signup_errors'], $_SESSION['signup_data']);
         <div class="row col-sm-10 col-md-8 col-lg-6 shadow p-3 bg-white rounded">
             <h2 class="text-center">Registrá una cuenta</h2>
             <form id="form" class="row g-3 needs-validation"
-                  action="<?php echo HANDLERS ?>signup_handler.php"
+                  action="/signup"
                   method="post"
                   novalidate>
                 <div class="col-12">
@@ -52,6 +51,7 @@ unset($_SESSION['signup_errors'], $_SESSION['signup_data']);
                                placeholder="Este será tu usuario para iniciar sesión"
                                value="<?php echo Sanitizer::output($data['username'] ?? '') ?>"
                                aria-describedby="username_feedback inputGroupPrepend"
+                               autocomplete="off"
                                required>
                         <div class="invalid-feedback" id="username_feedback">
                             <?php echo $errors['username'] ?? '' ?>
@@ -76,6 +76,7 @@ unset($_SESSION['signup_errors'], $_SESSION['signup_data']);
                            class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : '' ?>"
                            name="password"
                            placeholder="Elegí una contraseña segura"
+                           autocomplete="new-password"
                            required>
                     <div class="invalid-feedback" id="password_feedback">
                         <?php echo $errors['password'] ?? '' ?>
@@ -94,7 +95,7 @@ unset($_SESSION['signup_errors'], $_SESSION['signup_data']);
                 </div>
                 <div class="col-12 mt-5 mb-3">
                     <button type="submit" class="btn btn-primary btn-lg w-100">¡Registrame!</button>
-                    <p class="text-end fs-6 fw-light mt-3">¿Ya tenés cuenta? <a href="login.php">¡Iniciá sesión!</a></p>
+                    <p class="text-end fs-6 fw-light mt-3">¿Ya tenés cuenta? <a href="/login">¡Iniciá sesión!</a></p>
                 </div>
             </form>
 

@@ -9,7 +9,6 @@ services:
     volumes:
       - .:/var/www/html:Z
       - ./logs/apache:/var/log/apache2:Z
-      - ./public/uploads:/var/www/html/public/uploads:Z
     depends_on:
       - db
     environment:

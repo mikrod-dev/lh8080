@@ -1,21 +1,19 @@
 <?php
 $page_title = 'Login | lh:8080';
-require_once(__DIR__ . '/../config/php/paths.php');
-//require_once(SECURITY . 'SessionManager.php');
-//require_once(HELPERS . 'Sanitizer.php');
-require_once(__DIR__ . '/../bootstrap/autoload.php');
+require_once(__DIR__ . '/../../../config/php/paths.php');
+require_once(__DIR__ . '/../../../bootstrap/autoload.php');
 
 use Security\SessionManager;
 use Helpers\Sanitizer;
 
 SessionManager::init();
 
+$errors = SessionManager::get('login_errors') ?? [];
+$data = SessionManager::get('login_data') ?? [];
 
-$errors = $_SESSION['login_errors'] ?? [];
-$data = $_SESSION['login_data'] ?? [];
-
+SessionManager::delete( 'login_errors' );
+SessionManager::delete( 'login_data' );
 require_once(PARTIALS . 'header.php');
-unset($_SESSION['login_errors'], $_SESSION['login_data']);
 ?>
     <body class="container d-flex flex-column min-vh-100">
 <header>
@@ -27,8 +25,9 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
         <div class="row col-sm-10 col-md-8 col-lg-6 shadow p-3 bg-white rounded">
             <h2 class="text-center">Iniciá sesión</h2>
             <form id="form" class="row g-3 needs-validation"
-                  action="<?php echo HANDLERS ?>login_handler.php"
+                  action="/login"
                   method="post"
+                  autocomplete="on"
                   novalidate>
                 <div class="col-12">
                     <label for="username" class="form-label">Nombre de usuario</label>
@@ -38,8 +37,8 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
                                class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : '' ?>"
                                name="username"
                                placeholder="Ingresá tu usuario"
-                               autocomplete="username"
                                value="<?php echo Sanitizer::output($data['username'] ?? '') ?>"
+                               autocomplete="username"
                                required>
                         <div class="invalid-feedback" id="username_feedback">
                             <?php echo $errors['username'] ?? '' ?>
@@ -52,8 +51,8 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
                            class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : '' ?>"
                            name="password"
                            placeholder="Tu contraseña segura"
-                           autocomplete="current-password"
                            value="<?php echo Sanitizer::output($data['password'] ?? '') ?>"
+                           autocomplete="current-password"
                            required>
                     <div class="invalid-feedback" id="password_feedback">
                         <?php echo $errors['password'] ?? '' ?>
@@ -61,7 +60,7 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
                 </div>
                 <div class="col-12 mt-5 mb-3">
                     <button type="submit" class="btn btn-primary btn-lg w-100">¡Iniciar sesión!</button>
-                    <p class="text-end fs-6 fw-light mt-3">¿No tenés cuenta? <a href="signup.php">¡Registrarme!</a></p>
+                    <p class="text-end fs-6 fw-light mt-3">¿No tenés cuenta? <a href="/signup">¡Registrarme!</a></p>
                 </div>
             </form>
 

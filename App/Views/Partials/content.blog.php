@@ -1,13 +1,6 @@
 <?php
-$page_title = 'Blog | lh:8080';
-require_once(__DIR__ . '/../config/php/paths.php');
-require_once(PARTIALS . 'header.php');
+require_once(__DIR__ . '/../../../config/php/paths.php');
 ?>
-<body class="container d-flex flex-column min-vh-100">
-<header>
-    <?php require_once(PARTIALS . 'nav.public.php'); ?>
-</header>
-
 <main class="mt-5">
     <div class="row">
         <section class="row g-3 col-12 col-lg-9">
@@ -93,11 +86,8 @@ require_once(PARTIALS . 'header.php');
         </section>
 
         <div class="col-12 col-lg-3 d-none d-lg-block">
-            <?php require_once(PARTIALS . 'aside.php'); ?>
+            <?php require_once(PARTIALS . 'aside.blog.php'); ?>
         </div>
 
     </div>
 </main>
-</body>
-<?php require_once(PARTIALS . 'footer.php'); ?>
-

@@ -1,6 +1,6 @@
 <?php
 $page_title = 'Inicio | lh:8080';
-require_once(__DIR__ . '/../../../../config/php/paths.php');;
+require_once(__DIR__ . '/../../../config/php/paths.php');;
 require_once(PARTIALS . 'header.php');
 ?>
     <body class="container d-flex flex-column min-vh-100">

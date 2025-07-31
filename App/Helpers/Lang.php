@@ -11,7 +11,7 @@ final class Lang
     {
         self::$locale = $lang;
 
-        $file = LANG . "{$lang}/messages.php";
+        $file = LANG . "$lang/messages.php";
         if (file_exists($file)) self::$messages = require_once($file);
         else self::$messages = require_once(LANG . "es/messages.php");
     }

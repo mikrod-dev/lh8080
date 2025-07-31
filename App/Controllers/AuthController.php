@@ -4,22 +4,20 @@ declare(strict_types=1);
 namespace Controllers;
 
 require_once(__DIR__ . '/../../config/php/paths.php');
-require_once(CONFIG . 'locale.php');
-//require_once(HELPERS . 'Lang.php');
-//require_once(HELPERS . 'Sanitizer.php');
-//require_once(SECURITY . 'SessionManager.php');
-//require_once(MODELS . 'User.php');
 require_once(__DIR__ . '/../../bootstrap/autoload.php');
 
-use Models\User;
+use Repositories\UserRepository;
 use Security\SessionManager;
 use Helpers\Sanitizer;
+use Helpers\LocaleManager;
 use Helpers\Lang;
+use Models\User;
 
 final class AuthController
 {
-    public static function login(array $data): array
+    public function login(array $data): array
     {
+        LocaleManager::init();
         $username = Sanitizer::text($data['username'] ?? '');
         $password = Sanitizer::text($data['password'] ?? '');
 
@@ -36,7 +34,8 @@ final class AuthController
             return ['success' => false, 'errors' => $errors];
         }
 
-        $user = User::findByUsername($username);
+        $userRepository = new UserRepository();
+        $user = $userRepository->findByUsername($username);
         $loginFailed = Lang::get('login_failed');
 
         if (!$user) {
@@ -59,28 +58,48 @@ final class AuthController
             ];
         }
 
+        if ($user->getId() === 0) {
+            return [
+                'success' => false,
+                'errors' => [
+                    'username' => $loginFailed,
+                    'password' => $loginFailed
+                ]
+            ];
+        }
+
         SessionManager::init();
-        $_SESSION['user_id'] = $user->getId();
-        $_SESSION['username'] = $user->getUsername();
+        SessionManager::set('user_id', $user->getId());
+        SessionManager::set('username', $user->getUsername());
+        SessionManager::set('lang', $user->getPreferredLanguage());
+        SessionManager::set('role', $user->getRole());
         $user->setLastLogin();
 
         return ['success' => true];
     }
 
-    public static function logout(): never
+    public function checkAuth(): bool
     {
         SessionManager::init();
-        unset($_SESSION['user_id'], $_SESSION['username']);
-        SessionManager::destroy();
-        header('Location: /public/index.php');
-        exit;
+        return SessionManager::has('user_id') &&
+                SessionManager::has('username');
     }
 
-    //TODO: verificar utilidad de este método en comparación con CSRF token
-    public static function checkAuth(): bool
+    public function forceLogin(User $user): void
     {
         SessionManager::init();
-        return isset($_SESSION['user_id']);
+        SessionManager::set('user_id', $user->getId());
+        SessionManager::set('username', $user->getUsername());
+        SessionManager::set('lang', $user->getPreferredLanguage());
+        SessionManager::set('role', $user->getRole());
+        $user->setLastLogin();
+    }
+
+    public function logout(): never
+    {
+        SessionManager::logout();
+        header('Location: /');
+        exit;
     }
 
 }

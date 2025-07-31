@@ -2,11 +2,14 @@
 header('Content-Type: application/javascript');
 
 require_once(__DIR__ . '/../../../config/php/paths.php');
-require_once(CONFIG . 'locale.php');//TODO:revisar este require
+//require_once(CONFIG . 'LocaleManager.php');//TODO:revisar este require
 //require_once (HELPERS . 'Lang.php');
 require_once (__DIR__ . '/../../../bootstrap/autoload.php');
 
+use Helpers\LocaleManager;
 use Helpers\Lang;
+
+LocaleManager::init();
 
 $message = require_once(CONFIG . 'general.php');
 

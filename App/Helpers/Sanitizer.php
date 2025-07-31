@@ -4,9 +4,6 @@ namespace Helpers;
 
 final class Sanitizer
 {
-    // Sanitizar texto plano
-    // verificar si se puede reducir con htmlspecialchars() + strip_tags()
-    // problema: FILTER_SANITIZE_STRING está obsoleto. el manual recomienda usar htmlspecialchars()
     public static function text(string $text, ?int $max_length = null): string
     {
         $sanitized = trim($text);
@@ -30,7 +27,8 @@ final class Sanitizer
         return filter_var(trim($url), FILTER_SANITIZE_URL);
     }
 
-    public static function int(string $number): string{
+    public static function int(string $number): string
+    {
         return filter_var(trim($number), FILTER_SANITIZE_NUMBER_INT);
     }
 

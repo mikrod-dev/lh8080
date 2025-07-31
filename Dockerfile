@@ -11,14 +11,6 @@ RUN a2enmod rewrite && a2enmod headers
 # Configurar Apache
 COPY config/apache/apache.conf /etc/apache2/sites-available/000-default.conf
 
-# Copiar código fuente. Modifica el tamaño de la build.
-#COPY . /var/www/html
-
-# Crear directorio para uploads. Confirmar si conviene 755 o 644
-RUN mkdir -p /var/www/html/public/uploads && \
-    chown -R www-data:www-data /var/www/html/public/uploads && \
-    chmod -R 755 /var/www/html/public/uploads
-
 # Establecer permisos
 RUN chown -R www-data:www-data /var/www/html/ && \
     find /var/www/html -type f -exec chmod 644 {} \; && \

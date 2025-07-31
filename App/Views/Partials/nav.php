@@ -1,5 +1,5 @@
 <?php
-//para implementar: buscador
+//TODO: implementar buscador
 ?>
 
 <!--links principales para distribuir a los otros nav-->
@@ -7,13 +7,13 @@
     <li class="nav-item">
         <a class="nav-link active"
            aria-current="page"
-           href="/public/index.php">
+           href="/">
             Inicio
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link"
-           href="/public/blog.php">
+           href="/blog">
             Blog
         </a>
     </li>

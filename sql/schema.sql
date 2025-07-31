@@ -21,6 +21,7 @@ CREATE TABLE users
     avatar_url    VARCHAR(255)           DEFAULT NULL,
     is_active     BOOLEAN                DEFAULT TRUE,
     last_login    TIMESTAMP    NULL,
+    preferred_language VARCHAR(2) DEFAULT 'es',
     created_at    TIMESTAMP              DEFAULT CURRENT_TIMESTAMP,
     updated_at    TIMESTAMP              DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_username (username),

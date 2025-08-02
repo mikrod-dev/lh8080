@@ -1,19 +1,22 @@
 <?php
-$page_title = 'Login | lh:8080';
 require_once(__DIR__ . '/../../../config/php/paths.php');
 require_once(__DIR__ . '/../../../bootstrap/autoload.php');
 
 use Security\SessionManager;
 use Helpers\Sanitizer;
+use Helpers\Config;
+use Core\Middlewares\CSRFToken;
 
 SessionManager::init();
 
+$page_title = 'Login' . Config::get('seo.default_title_suffix');
 $errors = SessionManager::get('login_errors') ?? [];
 $data = SessionManager::get('login_data') ?? [];
+$token = CSRFToken::generate();
 
 SessionManager::delete( 'login_errors' );
 SessionManager::delete( 'login_data' );
-require_once(PARTIALS . 'header.php');
+require_once(PARTIALS . 'head.php');
 ?>
     <body class="container d-flex flex-column min-vh-100">
 <header>
@@ -29,6 +32,7 @@ require_once(PARTIALS . 'header.php');
                   method="post"
                   autocomplete="on"
                   novalidate>
+                <input type="hidden" name="csrf_token" value="<?php echo Sanitizer::output($token)?>">
                 <div class="col-12">
                     <label for="username" class="form-label">Nombre de usuario</label>
                     <div class="input-group has-validation">

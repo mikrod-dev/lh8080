@@ -4,6 +4,8 @@ namespace Models;
 
 require_once(__DIR__ . '/../../bootstrap/autoload.php');;
 
+use Helpers\Sanitizer;
+use Helpers\Validator;
 use Repositories\UserRepository;
 
 class User
@@ -19,7 +21,7 @@ class User
     private string $createdAt;
     private string $updatedAt;
     private ?string $lastLogin;
-    private string $preferred_language;
+    private string $preferredLanguage;
 
     public function __construct(array $data = [])
     {
@@ -33,7 +35,7 @@ class User
         $this->createdAt = $data['created_at'] ?? date('Y-m-d H:i:s');
         $this->updatedAt = $data['updated_at'] ?? $this->createdAt;
         $this->lastLogin = $data['last_login'] ?? null;
-        $this->preferred_language = $data['preferred_language'] ?? 'es';
+        $this->preferredLanguage = $data['preferred_language'] ?? 'es';
         $this->setAvatarUrl($data['avatar_url'] ?? null);
     }
 
@@ -57,12 +59,17 @@ class User
 
     public function setAvatarUrl(?string $url = null): void
     {
-        $this->avatarUrl = $url ?? "https://api.dicebear.com/9.x/bottts-neutral/svg?seed=" . urlencode($this->username);
+        $url_to_save = Sanitizer::url($url ?? "https://api.dicebear.com/9.x/bottts-neutral/svg?seed=" . urlencode($this->username));
+        $url_to_save = Validator::url($url_to_save) ? $url_to_save : null;
+        $this->avatarUrl = $url_to_save;
+
+        $userRepository = new UserRepository();
+        $userRepository->updateAvatarUrl($this->getId(), $this->getAvatarUrl());
     }
 
     public function setPreferredLanguage(string $lang): void
     {
-        $this->preferred_language = $lang;
+        $this->preferredLanguage = $lang;
     }
 
     public function setRole(string $role): void
@@ -123,7 +130,7 @@ class User
 
     public function getPreferredLanguage(): string
     {
-        return $this->preferred_language;
+        return $this->preferredLanguage;
     }
 
     public function getRole(): string

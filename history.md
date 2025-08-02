@@ -334,40 +334,145 @@ Este archivo sirve como bitácora de progreso y motivación personal 🧠💪
 🏅 **Badges**: `🪪 Gestor de identidades`
 
 🔧 Tareas realizadas:
-- Crear interfaces distintas para cada tipo de usuario: admin, user y publi:
+- Crear interfaces distintas para cada tipo de usuario: admin, user y public:
   - 3 navs con distintos links
   - 3 sidebars, 2 para los dashboards y uno para el de blog
 - Modularizar nav.php para poder separar uno por rol
 - Implementar funcionalidad dinámica a los sidebars que oculta el texto en pantallas chicas
-- Renombré la carpeta `Layouts/` por `Partials/`
+- Renombrar la carpeta `Layouts/` a `Partials/`
+- Implementar el autoloader
 - Eliminar clases redundantes de Bootstrap
  
 📦 Resultado: Layout de Dashboards listos para agregar funcionalidad
 
+## 🔐 Nivel 9: Seguridad y configuración centralizada
+**Objetivo**: Modularizar la configuración del sitio, proteger formularios con CSRF y estructurar middlewares reutilizables\
+🏅 **Badges**: `🧰 Arquitecto de la seguridad`, `🧙 Config Wizard`, `🔐 Guardia del Login`
+
+🔧 Tareas realizadas:
+
+- Finalizar la implementación del sistema de configuración centralizado con la clase Config
+- Los archivos site.php y seo.php ahora definen dinámicamente el branding del sitio, metadatos y valores reutilizables en todo el proyecto
+- Crear un CSRFMiddleware que intercepta y valida tokens en formularios POST, asegurando que ninguna acción crítica se realice sin protección
+- La clase CSRFToken genera y asigna el token CSRF en los formularios
+- Implementar middlewares reutilizables: AuthMiddleware para rutas protegidas y GuestMiddleware para rutas públicas
+- Consolidar la lógica de rutas y middleware en el sistema Router, lo que permite definir rutas junto a sus restricciones de acceso
+- Definir acceso único desde index.php que redirige usando Router y Middlewares
+- `AuthController` y `SignupController` son los responsables de manejar los envíos de POST y redirigir cuando corresponda
+- Implementar manejo de errores de acceso con ErrorHandler y páginas error: 403, 404, 500 y 503
+- La clase UserRepository es la única que maneja los accesos a la BBDD
+
+🚫 Problemas enfrentados:
+- El validador frontend me impedía usar el botón `submit` por el nuevo `<input type="hidden" value="$CSRFToken">`
+
+✅ Soluciones:
+- Tuve que modificar la función que impide activación del botón `submit` con el uso de `form.querySelector('input:not([type="hidden"])')`
+
+📦 Resultado:
+- Único punto de entrada al sitio: `public/index.php`
+- Uso de rutas con middlewares
+- Formularios de login y signup solo accesible para usuarios no logueados
+- Formularios protegidos contra ataques CSRF
+- Regeneración automática del `session_id` cada 15 mins 
+- Proyecto con archivos y carpetas reorganizadas
+
+```
+/
+├── public/
+│   ├── index.php
+│   ├── .htaccess
+│   ├── uploads/
+│   ├── assets/
+│   │   └── js/
+│   │   │   ├── general.js.php
+│   │   │   ├── lang.js.php
+│   │   │   ├── inputFormValidators.js
+│   │   │   ├── login.js
+│   │   │   └── signup.js
+├── App/
+│   ├── Controllers/
+│   │   ├── AuthController.php
+│   │   ├── PageController.php
+│   │   └── SignupController.php
+│   ├── Core/
+│   │   ├── Middlewares/
+│   │   │   ├── AuthMiddleware.php
+│   │   │   ├── CSRFMiddleware.php
+│   │   │   ├── CSRFToken.php
+│   │   │   └── GuestMiddleware.php
+│   │   ├── Database.php
+│   │   ├── ErrorHandler.php
+│   │   ├── Router.php
+│   │   └── ViewRenderer.php
+│   └── Helpers/
+│   │   ├── Config.php
+│   │   ├── Lang.php
+│   │   ├── LocaleManager.php
+│   │   ├── Sanitizer.php
+│   │   └── Validator.php
+│   ├── Models/
+│   │   └── User.php
+│   ├── Repositories/
+│   │   └── UserRepository.php
+│   ├── Security/
+│   │   └── SessionManager.php
+│   └── Views/
+│   │   ├── Admin/
+│   │   │   ├── blog.view.php
+│   │   │   ├── dashboard.view.php
+│   │   │   └── index.view.php
+│   │   ├── Errors/
+│   │   │   ├── 403.view.php
+│   │   │   ├── 404.view.php
+│   │   │   ├── 500.view.php
+│   │   │   └── 503.view.php
+│   │   ├── Partials/
+│   │   │   ├── aside.admin.php
+│   │   │   ├── aside.blog.php
+│   │   │   ├── aside.user.php
+│   │   │   ├── content.blog.php
+│   │   │   ├── footer.php
+│   │   │   ├── head.php
+│   │   │   ├── hero.php
+│   │   │   ├── nav.admin.php
+│   │   │   ├── nav.php
+│   │   │   ├── nav.public.php
+│   │   │   └── nav.user.php
+│   │   ├── Public/
+│   │   │   ├── blog.view.php
+│   │   │   ├── index.view.php
+│   │   │   ├── login.view.php
+│   │   │   └── signup.view.php
+│   │   ├── User/
+│   │   │   ├── blog.view.php
+│   │   │   ├── dashboard.view.php
+│   │   │   └── index.view.php
+├── bootstrap/
+│   └── autoload.php
+├── config/
+│   └── apache/
+│   │   └── apache.conf
+│   └── php/
+│   │   ├── general.php
+│   │   ├── paths.php
+│   │   ├── seo.php
+│   │   └── site.php
+├── lang/
+│   ├── es/
+│   │   └── messages.php
+├── sql/
+│   └── schema.sql
+├── .env
+├── .gitignore
+├── .dockerignore
+├── Dockerfile
+├── docker-compose.yml
+├── LICENSE
+├── history.md
+└── README.md
+```
+
 ***
-
-### TO-DO: Refactor previo al router
-
-#### 🗂️ 1. Reorganizar estructura del proyecto
-- Mover archivos públicos a public/: index.php, .htaccess, assets/, uploads/
-- Verificar que public/index.php incluya solo lo necesario (uso de rutas relativas o absolutas controladas desde paths.php).
-
-#### 🌐 2. Configurar Apache (Docker)
-- Asegurar que el <Directory> correspondiente sea también /var/www/html/public
-
-#### 🐋 3. Ajustar Dockerfile y docker-compose
-- Restaurar línea COPY . /var/www/html en el Dockerfile
-- Eliminar bind mount de volumen en desarrollo (.:/var/www/html) cuando se pase a producción
-
-#### 🔒 4. Seguridad
-- Usar session.cookie_secure solo si HTTPS está activo
-
-#### 🧪 5. Verificación y testing final
-- Ejecutar docker compose up --build y verificar: Acceso por localhost:8080
-- Carga de estilos, scripts y subida de archivos
-- Base de datos conectada desde .env
-- Realizar un test de login y registro funcional
-- Verificar errores en logs/apache/error.log
 
 ### 📌 Estado actual del proyecto
 
@@ -383,9 +488,7 @@ Este archivo sirve como bitácora de progreso y motivación personal 🧠💪
 
 ### 🚧 Próximas etapas
 
-- Nivel 8: Crear panel dashboard
-- Nivel 9: CRUD de posts con editor Markdown
-- Nivel 10: Crear router simple en PHP y centralizar rutas
+- Nivel 10: CRUD de posts con editor Markdown
 - Nivel 11: Sistema de comentarios
 - Nivel 12: Buscador por palabra clave y categoría
 - Nivel 13: Roles y permisos
@@ -393,11 +496,9 @@ Este archivo sirve como bitácora de progreso y motivación personal 🧠💪
 
 ### 🏅 Badges
 
-- 🧙 Config Wizard
 - 🎨 UX Sutil
-- 🔐 Guardia del Login
 - 🧭 Navegador Semántico
-  🧙‍♂️ Admin total
+- 🧙‍♂️ Admin total
 - 💬 Sistema de comentarios activo
 - 📝 Editor con Markdown
 - 🧹 Cazador de errores

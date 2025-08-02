@@ -6,7 +6,6 @@ namespace Controllers;
 require_once(__DIR__ . '/../../config/php/paths.php');
 require_once(__DIR__ . '/../../bootstrap/autoload.php');
 
-use Exception;
 use Helpers\Sanitizer;
 use Helpers\Validator;
 use Helpers\Config;
@@ -14,6 +13,7 @@ use Helpers\LocaleManager;
 use Helpers\Lang;
 use Models\User;
 use Repositories\UserRepository;
+use Security\SessionManager;
 
 final class SignupController
 {
@@ -21,9 +21,6 @@ final class SignupController
     private int $min_username_length;
     private int $min_password_length;
 
-    /**
-     * @throws Exception
-     */
     public function __construct()
     {
         $this->min_name_length = Config::get('general.min_name_length');
@@ -31,7 +28,22 @@ final class SignupController
         $this->min_password_length = Config::get('general.min_password_length');
     }
 
-    public function signup(array $data): array
+    public function signupHandler(): never
+    {
+        SessionManager::init();
+        $result = $this->signup($_POST);
+
+        if ($result['success']){
+            header('Location: /dashboard');
+        } else {
+            SessionManager::set('signup_errors', $result['errors']);
+            SessionManager::set('signup_data', $_POST);
+            header('Location: /signup');
+        }
+        exit;
+    }
+
+    private function signup(array $data): array
     {
         LocaleManager::init();
 

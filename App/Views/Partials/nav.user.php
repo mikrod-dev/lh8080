@@ -1,5 +1,14 @@
 <?php
 require_once(__DIR__ . '/../../../config/php/paths.php');
+require_once __DIR__ . '/../../../bootstrap/autoload.php';
+
+use Security\SessionManager;
+use Core\Middlewares\CSRFToken;
+use Helpers\Sanitizer;
+
+SessionManager::init();
+$token = CSRFToken::generate();
+$avatar_url = SessionManager::get('avatar_url');
 ?>
 
 <nav class="navbar navbar-expand-lg bg-transparent mt-3">
@@ -29,7 +38,8 @@ require_once(__DIR__ . '/../../../config/php/paths.php');
             <div class="btn-group d-lg-none mt-3" role="group" aria-label="dashboard and logout buttons">
                 <a href="/dashboard" class="btn btn-outline-light">Mi panel</a>
                 <form action="/logout" method="post">
-                    <button type="submit" class="btn btn-danger">Salir</button>
+                    <input type="hidden" name="csrf_token" value="<?php echo Sanitizer::output($token) ?>">
+                    <button type="submit" class="btn btn-outline-danger">Salir</button>
                 </form>
             </div>
 
@@ -39,18 +49,16 @@ require_once(__DIR__ . '/../../../config/php/paths.php');
                 <a href="#"
                    class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         width="32" height="32" fill="currentColor"
-                         class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                        <path fill-rule="evenodd"
-                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                    </svg>
+                    <img src="<?php echo Sanitizer::output($avatar_url) ?>"
+                         alt="avatar"
+                         class="rounded-circle"
+                         width="32" height="32">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small shadow">
                     <li><a class="dropdown-item" href="/dashboard">Mi panel</a></li>
                     <li>
                         <form action="/logout" method="post">
+                            <input type="hidden" name="csrf_token" value="<?php echo Sanitizer::output($token) ?>">
                             <button type="submit" class="dropdown-item">Salir</button>
                         </form>
                     </li>

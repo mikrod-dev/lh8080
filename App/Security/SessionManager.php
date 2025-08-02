@@ -16,6 +16,8 @@ final class SessionManager
             session_start();
         }
 
+        // TODO: Posiblemente implementar cierre de sesión por inactividad prolongada
+
         self::regenerateId();
     }
 
@@ -23,8 +25,9 @@ final class SessionManager
     {
         if(!isset($_SESSION['last_regeneration'])){
             $_SESSION['last_regeneration'] = time();
-        }elseif(time() - $_SESSION['last_regeneration'] > 3600){
-            session_regenerate_id(true);
+        }elseif(time() - $_SESSION['last_regeneration'] > 900){
+            session_regenerate_id();
+            $_SESSION['last_regeneration'] = time();
         }
     }
 
@@ -60,5 +63,4 @@ final class SessionManager
         session_unset();
         session_destroy();
     }
-
 }

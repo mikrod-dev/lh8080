@@ -1,4 +1,12 @@
 <?php
+require_once __DIR__ . '/../../../bootstrap/autoload.php';
+
+use Security\SessionManager;
+use Core\Middlewares\CSRFToken;
+use Helpers\Sanitizer;
+
+SessionManager::init();
+$token = CSRFToken::generate();
 ?>
 
 <aside class="sidebar col-auto p-3 mt-5">
@@ -86,6 +94,7 @@
         <hr class="border-secondary d-block d-md-none">
 
         <form action="/logout" method="post">
+            <input type="hidden" name="csrf_token" value="<?php echo Sanitizer::output($token) ?>">
             <button type="submit"
                     class="nav-link d-flex gap-3 align-items-center bg-transparent border-0">
                 <svg xmlns="http://www.w3.org/2000/svg"

@@ -4,17 +4,19 @@ require_once(__DIR__ . '/../../../bootstrap/autoload.php');
 
 use Security\SessionManager;
 use Helpers\Sanitizer;
+use Helpers\Config;
+use Core\Middlewares\CSRFToken;
 
 SessionManager::init();
 
-
-$page_title = 'Signup | lh:8080';
+$page_title = 'Signup' . Config::get('seo.default_title_suffix');
 $errors = SessionManager::get('signup_errors') ?? [];
 $data = SessionManager::get('signup_data') ?? [];
+$token = CSRFToken::generate();
 
 SessionManager::delete( 'signup_errors' );
 SessionManager::delete( 'signup_data' );
-require_once(PARTIALS . 'header.php');
+require_once(PARTIALS . 'head.php');
 ?>
     <body class="container d-flex flex-column min-vh-100">
 <header>
@@ -29,6 +31,7 @@ require_once(PARTIALS . 'header.php');
                   action="/signup"
                   method="post"
                   novalidate>
+                <input type="hidden" name="csrf_token" value="<?php echo Sanitizer::output($token) ?>">
                 <div class="col-12">
                     <label for="name" class="form-label">¿Cómo querés que te llamemos?</label>
                     <input type="text" id="name"
@@ -88,6 +91,7 @@ require_once(PARTIALS . 'header.php');
                            class="form-control <?php echo isset($errors['confirm_password']) ? 'is-invalid' : '' ?>"
                            name="confirm_password"
                            placeholder="Es para confirmar"
+                           autocomplete="off"
                            required>
                     <div class="invalid-feedback" id="confirm_password_feedback">
                         <?php echo $errors['confirm_password'] ?? '' ?>

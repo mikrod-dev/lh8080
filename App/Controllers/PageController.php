@@ -4,6 +4,7 @@ namespace Controllers;
 
 require_once(__DIR__ . '/../../bootstrap/autoload.php');
 
+use Core\Middlewares\GuestMiddleware;
 use Core\ViewRenderer;
 use Security\SessionManager;
 
@@ -17,11 +18,13 @@ final class PageController
 
     public function login(): void
     {
+        GuestMiddleware::handle();
         ViewRenderer::render('Public/login.view');
     }
 
     public function signup(): void
     {
+        GuestMiddleware::handle();
         ViewRenderer::render('Public/signup.view');
     }
 

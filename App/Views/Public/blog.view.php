@@ -1,7 +1,11 @@
 <?php
-$page_title = 'Blog | lh:8080';
 require_once(__DIR__ . '/../../../config/php/paths.php');
-require_once(PARTIALS . 'header.php');
+require_once(__DIR__ . '/../../../bootstrap/autoload.php');
+
+use Helpers\Config;
+
+$page_title = 'Blog' . Config::get('seo.default_title_suffix');
+require_once(PARTIALS . 'head.php');
 ?>
 <body class="container d-flex flex-column min-vh-100">
 <header>

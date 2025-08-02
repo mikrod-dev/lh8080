@@ -19,7 +19,7 @@ final class Database
                 $password = getenv('DB_PASS');
 
                 if (!$host || !$db || !$user || !$password)
-                    throw new PDOException("Database connection failed: missing configuration");
+                    throw new PDOException("Información de base de datos no disponible.");
 
                 $dsn = "mysql:host=$host;dbname=$db;port=$port;charset=utf8mb4";
                 self::$connection = new PDO($dsn, $user, $password, [
@@ -27,7 +27,7 @@ final class Database
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 ]);
             } catch (PDOException $e) {
-                error_log("Database connection failed: " . $e->getMessage());
+                error_log("[DATABASE] conexión fallida: " . $e->getMessage());
                 die("Database connection error");
             }
         }

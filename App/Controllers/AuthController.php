@@ -15,7 +15,21 @@ use Models\User;
 
 final class AuthController
 {
-    public function login(array $data): array
+    public function loginHandler(): never
+    {
+        $result = $this->login($_POST);
+
+        if ($result['success']) {
+            header('Location: /dashboard');
+        } else {
+            SessionManager::set('login_errors', $result['errors']);
+            SessionManager::set('login_data', $_POST);
+            header('Location: /login');
+        }
+        exit;
+    }
+
+    private function login(array $data): array
     {
         LocaleManager::init();
         $username = Sanitizer::text($data['username'] ?? '');
@@ -36,14 +50,14 @@ final class AuthController
 
         $userRepository = new UserRepository();
         $user = $userRepository->findByUsername($username);
-        $loginFailed = Lang::get('login_failed');
+        $login_failed_message = Lang::get('login_failed');
 
         if (!$user) {
             return [
                 'success' => false,
                 'errors' => [
-                    'username' => $loginFailed,
-                    'password' => $loginFailed
+                    'username' => $login_failed_message,
+                    'password' => $login_failed_message
                 ]
             ];
         }
@@ -52,8 +66,8 @@ final class AuthController
             return [
                 'success' => false,
                 'errors' => [
-                    'username' => $loginFailed,
-                    'password' => $loginFailed
+                    'username' => $login_failed_message,
+                    'password' => $login_failed_message
                 ]
             ];
         }
@@ -62,18 +76,13 @@ final class AuthController
             return [
                 'success' => false,
                 'errors' => [
-                    'username' => $loginFailed,
-                    'password' => $loginFailed
+                    'username' => $login_failed_message,
+                    'password' => $login_failed_message
                 ]
             ];
         }
 
-        SessionManager::init();
-        SessionManager::set('user_id', $user->getId());
-        SessionManager::set('username', $user->getUsername());
-        SessionManager::set('lang', $user->getPreferredLanguage());
-        SessionManager::set('role', $user->getRole());
-        $user->setLastLogin();
+        $this->loadUser($user);
 
         return ['success' => true];
     }
@@ -82,16 +91,18 @@ final class AuthController
     {
         SessionManager::init();
         return SessionManager::has('user_id') &&
-                SessionManager::has('username');
+            SessionManager::has('username');
     }
 
-    public function forceLogin(User $user): void
+    public function loadUser(User $user): void
     {
         SessionManager::init();
         SessionManager::set('user_id', $user->getId());
+        SessionManager::set('name', $user->getName());
         SessionManager::set('username', $user->getUsername());
-        SessionManager::set('lang', $user->getPreferredLanguage());
         SessionManager::set('role', $user->getRole());
+        SessionManager::set('avatar_url', $user->getAvatarUrl());
+        SessionManager::set('lang', $user->getPreferredLanguage());
         $user->setLastLogin();
     }
 

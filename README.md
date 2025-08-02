@@ -1,6 +1,6 @@
 # 💡 Blog `lh:8080 | De localhost 🖥️ al mundo 🌍`
 
-![Progreso](https://img.shields.io/badge/Nivel-8%2F20-yellow?style=flat-square)
+![Progreso](https://img.shields.io/badge/Nivel-9%2F20-yellow?style=flat-square)
 ![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-orange?style=flat-square)
 ![Última actualización](https://img.shields.io/badge/Actualizado-junio%202025-informational?style=flat-square)
 ![PHP](https://img.shields.io/badge/PHP-8.2-blue?style=flat-square&logo=php)
@@ -57,31 +57,96 @@ El "juego" de armar este blog es como un RPG lleno de: misiones, buscar tutorial
 /
 ├── public/
 │   ├── index.php
-│   ├── blog.php
-│   ├── login.php
-│   ├── signup.php
+│   ├── .htaccess
+│   ├── uploads/
 │   ├── assets/
+│   │   └── js/
+│   │   │   ├── general.js.php
+│   │   │   ├── lang.js.php
+│   │   │   ├── inputFormValidators.js
+│   │   │   ├── login.js
+│   │   │   └── signup.js
 ├── App/
-│   └── Layouts/
-│   │   ├── aside.php
-│   │   ├── footer.php
-│   │   ├── header.php
-│   │   └── nav.php 
-│   ├── Models/
 │   ├── Controllers/
+│   │   ├── AuthController.php
+│   │   ├── PageController.php
+│   │   └── SignupController.php
 │   ├── Core/
-│   └── Views/ 
+│   │   ├── Middlewares/
+│   │   │   ├── AuthMiddleware.php
+│   │   │   ├── CSRFMiddleware.php
+│   │   │   ├── CSRFToken.php
+│   │   │   └── GuestMiddleware.php
+│   │   ├── Database.php
+│   │   ├── ErrorHandler.php
+│   │   ├── Router.php
+│   │   └── ViewRenderer.php
+│   └── Helpers/
+│   │   ├── Config.php
+│   │   ├── Lang.php
+│   │   ├── LocaleManager.php
+│   │   ├── Sanitizer.php
+│   │   └── Validator.php
+│   ├── Models/
+│   │   └── User.php
+│   ├── Repositories/
+│   │   └── UserRepository.php
+│   ├── Security/
+│   │   └── SessionManager.php
+│   └── Views/
+│   │   ├── Admin/
+│   │   │   ├── blog.view.php
+│   │   │   ├── dashboard.view.php
+│   │   │   └── index.view.php
+│   │   ├── Errors/
+│   │   │   ├── 403.view.php
+│   │   │   ├── 404.view.php
+│   │   │   ├── 500.view.php
+│   │   │   └── 503.view.php
+│   │   ├── Partials/
+│   │   │   ├── aside.admin.php
+│   │   │   ├── aside.blog.php
+│   │   │   ├── aside.user.php
+│   │   │   ├── content.blog.php
+│   │   │   ├── footer.php
+│   │   │   ├── head.php
+│   │   │   ├── hero.php
+│   │   │   ├── nav.admin.php
+│   │   │   ├── nav.php
+│   │   │   ├── nav.public.php
+│   │   │   └── nav.user.php
+│   │   ├── Public/
+│   │   │   ├── blog.view.php
+│   │   │   ├── index.view.php
+│   │   │   ├── login.view.php
+│   │   │   └── signup.view.php
+│   │   ├── User/
+│   │   │   ├── blog.view.php
+│   │   │   ├── dashboard.view.php
+│   │   │   └── index.view.php
+├── bootstrap/
+│   └── autoload.php
 ├── config/
 │   └── apache/
+│   │   └── apache.conf
 │   └── php/
-│   │   └── config.php
+│   │   ├── general.php
+│   │   ├── paths.php
+│   │   ├── seo.php
+│   │   └── site.php
+├── lang/
+│   ├── es/
+│   │   └── messages.php
 ├── sql/
-├── admin/
+│   └── schema.sql
 ├── .env
-├── README.md
-├── history.md
+├── .gitignore
+├── .dockerignore
 ├── Dockerfile
-└── docker-compose.yml
+├── docker-compose.yml
+├── LICENSE
+├── history.md
+└── README.md
 ```
 
 ## 🧱 Progreso
@@ -96,25 +161,29 @@ El archivo [history.md](history.md) contiene los niveles superados y logros desb
 - 📁 Arquitecto de carpetas
 - 🧠 Estratega de rutas
 - 🪪 Gestor de identidades
+- 🧰 Arquitecto de la seguridad
+- 🧙 Config Wizard
+- 🔐 Guardia del Login
 
 ## 📌 Funcionalidades previstas
 
 - [x] Diseño inicial responsive
 - [x] Navegación entre secciones
-- [x] Sistema de layouts reutilizables
-- [ ] Crear y editar publicaciones desde el panel admin
+- [x] Sistema de partials reutilizables
+- [x] Panel de usuario y admin con subdominio
 - [x] Autenticación (login/signup para admin)
-- [ ] Panel de usuario (admin) con subdominio
 - [x] Base de datos para posts y usuarios
-- [ ] Routing personalizado con configuración de Apache y la clase Router
+- [x] Routing personalizado con configuración de Apache y la clase Router
+- [ ] Crear y editar publicaciones desde el panel admin
 - [ ] Markdown + vista previa para posts
 - [ ] Buscador interno
 
 ## 🏁 Objetivos
 
 - Aprender desarrollo web fullstack sin frameworks
+- Aprender y poner en práctica conceptos de ciberseguridad 
 - Comprender estructura de un blog funcional paso a paso
-- Documentar errores, soluciones y decisiones técnicas en cada etapa
+- Documentar desarrollo, errores, soluciones y decisiones técnicas en cada etapa
 
 ## 📄 Licencia
 Este proyecto está licenciado bajo la Licencia MIT — ver el archivo LICENSE para más información.

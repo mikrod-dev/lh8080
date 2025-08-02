@@ -1,7 +1,16 @@
 <?php
-$page_title = 'Inicio | lh:8080';
 require_once(__DIR__ . '/../../../config/php/paths.php');
-require_once(PARTIALS . 'header.php');
+require_once(__DIR__ . '/../../../bootstrap/autoload.php');
+
+use Security\SessionManager;
+use Helpers\Sanitizer;
+use Helpers\Config;
+
+SessionManager::init();
+
+$name = SessionManager::get('name');
+$page_title = 'Panel' . Config::get('seo.default_title_suffix');;
+require_once(PARTIALS . 'head.php');
 ?>
     <body class="container d-flex flex-column min-vh-100">
     <header>
@@ -14,7 +23,7 @@ require_once(PARTIALS . 'header.php');
             <main class="col p-4 overflow-auto">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center
                   pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Bienvenido, #nombre </h1>
+                    <h1 class="h2">Panel informativo de <?php echo Sanitizer::output($name) ?> </h1>
                 </div>
 
                 <!-- Widgets rápidos -->

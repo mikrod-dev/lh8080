@@ -72,7 +72,7 @@ export function validateConfirmPassword(password, confirmPassword, confirmPasswo
 }
 
 export function validSubmitSignup(form) {
-    const inputs = Array.from(form.querySelectorAll('input'));
+    const inputs = Array.from(form.querySelectorAll('input:not([type="hidden"])'));
 
     inputs.forEach(input => {
         if (!input.classList.contains('is-valid')) {
